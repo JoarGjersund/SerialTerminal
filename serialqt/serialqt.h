@@ -10,13 +10,27 @@ class serialqt : public QMainWindow
 private slots:
 	void readData();
 	void writeData();
+	void exitProgram();
+	void openSerialPort(QString portName);
+	void closeSerialPort();
 	
 public:
 	serialqt(QWidget *parent = Q_NULLPTR);
 
 private:
 	Ui::serialqtClass ui;
-	void openSerialPort();
+
 	QSerialPort *m_serial = nullptr;
 	QStringListModel *model;
+
+	QMenu* fileMenu;
+	QMenu* settingsMenu;
+	QAction *actionQuit;
+	QMenu* subMenuConnect;
+	QAction* actionPort;
+	QAction* actionDisconnect;
+
+	void drawMenu();
+	
+
 };

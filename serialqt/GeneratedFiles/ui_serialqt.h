@@ -13,15 +13,16 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
-#include <QtWidgets/QFormLayout>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
-#include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
 QT_BEGIN_NAMESPACE
@@ -29,12 +30,17 @@ QT_BEGIN_NAMESPACE
 class Ui_serialqtClass
 {
 public:
+    QAction *export_2;
+    QAction *quit;
+    QAction *connect;
+    QAction *disconnect;
     QWidget *centralWidget;
-    QFormLayout *formLayout;
+    QVBoxLayout *verticalLayout_2;
     QListView *listView;
-    QPushButton *pushButton;
+    QHBoxLayout *horizontalLayout_4;
     QLineEdit *lineEdit;
-    QMenuBar *menuBar;
+    QPushButton *pushButton;
+    QCheckBox *autoScroll;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -42,18 +48,26 @@ public:
     {
         if (serialqtClass->objectName().isEmpty())
             serialqtClass->setObjectName(QStringLiteral("serialqtClass"));
-        serialqtClass->resize(764, 668);
+        serialqtClass->resize(796, 664);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(1);
         sizePolicy.setHeightForWidth(serialqtClass->sizePolicy().hasHeightForWidth());
         serialqtClass->setSizePolicy(sizePolicy);
+        export_2 = new QAction(serialqtClass);
+        export_2->setObjectName(QStringLiteral("export_2"));
+        quit = new QAction(serialqtClass);
+        quit->setObjectName(QStringLiteral("quit"));
+        connect = new QAction(serialqtClass);
+        connect->setObjectName(QStringLiteral("connect"));
+        disconnect = new QAction(serialqtClass);
+        disconnect->setObjectName(QStringLiteral("disconnect"));
         centralWidget = new QWidget(serialqtClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
-        formLayout = new QFormLayout(centralWidget);
-        formLayout->setSpacing(6);
-        formLayout->setContentsMargins(11, 11, 11, 11);
-        formLayout->setObjectName(QStringLiteral("formLayout"));
+        verticalLayout_2 = new QVBoxLayout(centralWidget);
+        verticalLayout_2->setSpacing(6);
+        verticalLayout_2->setContentsMargins(11, 11, 11, 11);
+        verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
         listView = new QListView(centralWidget);
         listView->setObjectName(QStringLiteral("listView"));
         QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
@@ -62,34 +76,42 @@ public:
         sizePolicy1.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
         listView->setSizePolicy(sizePolicy1);
 
-        formLayout->setWidget(0, QFormLayout::SpanningRole, listView);
+        verticalLayout_2->addWidget(listView);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        lineEdit = new QLineEdit(centralWidget);
+        lineEdit->setObjectName(QStringLiteral("lineEdit"));
+        QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        sizePolicy2.setHorizontalStretch(1);
+        sizePolicy2.setVerticalStretch(0);
+        sizePolicy2.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
+        lineEdit->setSizePolicy(sizePolicy2);
+        lineEdit->setMaximumSize(QSize(16777210, 16777215));
+
+        horizontalLayout_4->addWidget(lineEdit);
 
         pushButton = new QPushButton(centralWidget);
         pushButton->setObjectName(QStringLiteral("pushButton"));
-        QSizePolicy sizePolicy2(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy2.setHorizontalStretch(0);
-        sizePolicy2.setVerticalStretch(0);
-        sizePolicy2.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy2);
+        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
+        sizePolicy3.setHorizontalStretch(0);
+        sizePolicy3.setVerticalStretch(0);
+        sizePolicy3.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy3);
         pushButton->setMaximumSize(QSize(50, 16777215));
 
-        formLayout->setWidget(2, QFormLayout::LabelRole, pushButton);
+        horizontalLayout_4->addWidget(pushButton);
 
-        lineEdit = new QLineEdit(centralWidget);
-        lineEdit->setObjectName(QStringLiteral("lineEdit"));
-        QSizePolicy sizePolicy3(QSizePolicy::Expanding, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(2);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(lineEdit->sizePolicy().hasHeightForWidth());
-        lineEdit->setSizePolicy(sizePolicy3);
+        autoScroll = new QCheckBox(centralWidget);
+        autoScroll->setObjectName(QStringLiteral("autoScroll"));
 
-        formLayout->setWidget(1, QFormLayout::SpanningRole, lineEdit);
+        horizontalLayout_4->addWidget(autoScroll);
+
+
+        verticalLayout_2->addLayout(horizontalLayout_4);
 
         serialqtClass->setCentralWidget(centralWidget);
-        menuBar = new QMenuBar(serialqtClass);
-        menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 764, 22));
-        serialqtClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(serialqtClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         serialqtClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
@@ -105,7 +127,12 @@ public:
     void retranslateUi(QMainWindow *serialqtClass)
     {
         serialqtClass->setWindowTitle(QApplication::translate("serialqtClass", "serialqt", nullptr));
+        export_2->setText(QApplication::translate("serialqtClass", "export", nullptr));
+        quit->setText(QApplication::translate("serialqtClass", "Quit", nullptr));
+        connect->setText(QApplication::translate("serialqtClass", "connect", nullptr));
+        disconnect->setText(QApplication::translate("serialqtClass", "disconnect", nullptr));
         pushButton->setText(QApplication::translate("serialqtClass", "Send", nullptr));
+        autoScroll->setText(QApplication::translate("serialqtClass", "Autoscroll", nullptr));
     } // retranslateUi
 
 };

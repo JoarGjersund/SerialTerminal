@@ -2,22 +2,65 @@
 #include <QtSerialPort>
 #include <qmessagebox.h>
 #include <QDebug>
-
+#include <QMenuBar>
 serialqt::serialqt(QWidget *parent)
 	: QMainWindow(parent), m_serial(new QSerialPort(this))
 {
-	openSerialPort();
+	drawMenu();
 	ui.setupUi(this);
 	model = new QStringListModel(this);
 	connect(m_serial, &QSerialPort::readyRead, this, &serialqt::readData);
 
 }
-
-void serialqt::openSerialPort()
+void serialqt::drawMenu()
 {
+
+	QMenuBar* menuBar = new QMenuBar(this);
+	setMenuBar(menuBar);
+
+	fileMenu = new QMenu("File", this);
+		actionQuit = new QAction("Close open port and leave", this);
+			connect(m_serial, &QSerialPort::readyRead, this, &serialqt::readData);
+			fileMenu->addAction(actionQuit);
+			QObject::connect(actionQuit, SIGNAL(triggered()), this, SLOT(exitProgram()));
+		this->menuBar()->addMenu(fileMenu);
+
+	settingsMenu = new QMenu("Settings", this);
+		subMenuConnect = new QMenu("Connect", this);
+
+			Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
+				actionPort = new QAction(port.portName()+":"+port.description(), this);
+				subMenuConnect->addAction(actionPort);
+
+				QSignalMapper* signalMapper = new QSignalMapper(this);
+				signalMapper->setMapping(actionPort, port.portName());
+
+				QObject::connect(signalMapper, SIGNAL(mapped(QString)), this, SLOT(openSerialPort(QString)));
+				connect(actionPort, SIGNAL(triggered()), signalMapper, SLOT(map()));
+			}
+			settingsMenu->addMenu(subMenuConnect);
+
+		actionDisconnect = new QAction("disconnect", this);
+			settingsMenu->addAction(actionDisconnect);
+			QObject::connect(actionDisconnect, SIGNAL(triggered()), this, SLOT(closeSerialPort()));
+		this->menuBar()->addMenu(settingsMenu);
+
+}
+void serialqt::exitProgram()
+{
+	closeSerialPort();
+	qApp->exit();
+}
+void serialqt::closeSerialPort()
+{
+	if (m_serial->isOpen())
+		m_serial->close();
+}
+void serialqt::openSerialPort(QString portName)
+{
+	qDebug("hallo");
 	
-	
-	m_serial->setPortName("COM1");
+	m_serial->setPortName(portName);
 	m_serial->setBaudRate(9600);
 	//m_serial->setDataBits(8);
 	//m_serial->setParity(0);
@@ -48,7 +91,11 @@ void serialqt::readData()
 	// Glue model and view together
 	ui.listView->setModel(model);
 
-	ui.listView->scrollToBottom();
+	if (ui.autoScroll->isChecked())
+	{
+		ui.listView->scrollToBottom();
+	}
+
 }
 void serialqt::writeData()
 {
