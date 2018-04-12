@@ -14,7 +14,8 @@ serialqt::serialqt(QWidget *parent)
 }
 void serialqt::drawMenu()
 {
-
+	// testing branch...
+	// also testing branch ...
 	QMenuBar* menuBar = new QMenuBar(this);
 	setMenuBar(menuBar);
 
