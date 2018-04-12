@@ -15,6 +15,9 @@ serialqt::serialqt(QWidget *parent)
 void serialqt::drawMenu()
 {
 
+	// this is a master commit..
+
+	// this is another master commit..
 	QMenuBar* menuBar = new QMenuBar(this);
 	setMenuBar(menuBar);
 
