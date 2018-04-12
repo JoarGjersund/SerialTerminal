@@ -22,6 +22,10 @@ void serialqt::drawMenu()
 	// testing branch...
 	// also testing branch ...
 
+
+	// now this is the master branch..
+
+
 	QMenuBar* menuBar = new QMenuBar(this);
 	setMenuBar(menuBar);
 
