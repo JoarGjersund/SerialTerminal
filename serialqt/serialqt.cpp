@@ -18,6 +18,10 @@ void serialqt::drawMenu()
 	// this is a master commit..
 
 	// this is another master commit..
+
+	// testing branch...
+	// also testing branch ...
+
 	QMenuBar* menuBar = new QMenuBar(this);
 	setMenuBar(menuBar);
 
