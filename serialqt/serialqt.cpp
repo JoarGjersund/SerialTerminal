@@ -6,6 +6,10 @@
 serialqt::serialqt(QWidget *parent)
 	: QMainWindow(parent), m_serial(new QSerialPort(this))
 {
+	timer = new QTimer(this);
+	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
+	timer->start(100);
+
 	drawMenu();
 	ui.setupUi(this);
 	model = new QStringListModel(this);
@@ -13,6 +17,10 @@ serialqt::serialqt(QWidget *parent)
 	connect(m_serial, &QSerialPort::readyRead, this, &serialqt::readData);
 }
 
+void serialqt::update() {
+	//QCoreApplication::processEvents();
+	timer->start(100);
+}
 void serialqt::drawMenu()
 {
 

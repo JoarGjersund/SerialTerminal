@@ -14,6 +14,7 @@ private slots:
 	void setBaudrate(int baudrate);
 	void closeSerialPort();
 	void readData();
+	void update();
 	
 public:
 	serialqt(QWidget *parent = Q_NULLPTR);
@@ -34,6 +35,6 @@ private:
 	QAction* actionBaudrate;
 
 	void drawMenu();
-	
+	QTimer* timer;
 
 };
