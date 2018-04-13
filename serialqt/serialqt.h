@@ -8,11 +8,12 @@ class serialqt : public QMainWindow
 {
 	Q_OBJECT
 private slots:
-	void readData();
 	void writeData();
 	void exitProgram();
 	void openSerialPort(QString portName);
+	void setBaudrate(int baudrate);
 	void closeSerialPort();
+	void readData();
 	
 public:
 	serialqt(QWidget *parent = Q_NULLPTR);
@@ -27,8 +28,10 @@ private:
 	QMenu* settingsMenu;
 	QAction *actionQuit;
 	QMenu* subMenuConnect;
+	QMenu* subMenuBaudrate;
 	QAction* actionPort;
 	QAction* actionDisconnect;
+	QAction* actionBaudrate;
 
 	void drawMenu();
 	

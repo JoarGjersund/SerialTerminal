@@ -9,9 +9,10 @@ serialqt::serialqt(QWidget *parent)
 	drawMenu();
 	ui.setupUi(this);
 	model = new QStringListModel(this);
-	connect(m_serial, &QSerialPort::readyRead, this, &serialqt::readData);
 
+	connect(m_serial, &QSerialPort::readyRead, this, &serialqt::readData);
 }
+
 void serialqt::drawMenu()
 {
 
@@ -30,7 +31,8 @@ void serialqt::drawMenu()
 	settingsMenu = new QMenu("Settings", this);
 		subMenuConnect = new QMenu("Connect", this);
 
-			Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) {
+			Q_FOREACH(QSerialPortInfo port, QSerialPortInfo::availablePorts()) 
+			{
 				actionPort = new QAction(port.portName()+":"+port.description(), this);
 				subMenuConnect->addAction(actionPort);
 
@@ -45,6 +47,22 @@ void serialqt::drawMenu()
 		actionDisconnect = new QAction("disconnect", this);
 			settingsMenu->addAction(actionDisconnect);
 			QObject::connect(actionDisconnect, SIGNAL(triggered()), this, SLOT(closeSerialPort()));
+
+		subMenuBaudrate = new QMenu("Baudrate", this);
+			Q_FOREACH(int baudrate, QSerialPortInfo::standardBaudRates()) 
+			{
+			actionBaudrate = new QAction(QString::number(baudrate), this);
+			subMenuBaudrate->addAction(actionBaudrate);
+			
+			QSignalMapper* signalMapper2 = new QSignalMapper(this);
+			signalMapper2->setMapping(actionBaudrate, baudrate);
+
+			QObject::connect(signalMapper2, SIGNAL(mapped(int)), this, SLOT(setBaudrate(int)));
+			connect(actionBaudrate, SIGNAL(triggered()), signalMapper2, SLOT(map()));
+			
+			}
+			settingsMenu->addMenu(subMenuBaudrate);
+
 		this->menuBar()->addMenu(settingsMenu);
 
 }
@@ -57,6 +75,10 @@ void serialqt::closeSerialPort()
 {
 	if (m_serial->isOpen())
 		m_serial->close();
+}
+void serialqt::setBaudrate(int baudrate)
+{
+	m_serial->setBaudRate(baudrate);
 }
 void serialqt::openSerialPort(QString portName)
 {
@@ -85,6 +107,7 @@ void serialqt::readData()
 	
 	// Make data
 	QStringList List;
+	
 	List << model->stringList() << data;
 
 	// Populate our model
