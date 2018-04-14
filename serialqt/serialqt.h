@@ -3,6 +3,7 @@
 #include "ui_serialqt.h"
 #include <QSerialPort>
 #include <QStringListModel>
+#include <console.h>
 class serialqt : public QMainWindow
 {
 	Q_OBJECT
@@ -22,7 +23,7 @@ private:
 	Ui::serialqtClass ui;
 
 	QSerialPort *m_serial = nullptr;
-	QStringListModel *model;
+	Console *m_console = nullptr;
 
 	QMenu* fileMenu;
 	QMenu* settingsMenu;

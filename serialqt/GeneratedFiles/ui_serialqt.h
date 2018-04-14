@@ -14,10 +14,9 @@
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QCheckBox>
-#include <QtWidgets/QHBoxLayout>
+#include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLineEdit>
-#include <QtWidgets/QListView>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QStatusBar>
@@ -36,11 +35,12 @@ public:
     QAction *disconnect;
     QWidget *centralWidget;
     QVBoxLayout *verticalLayout_2;
-    QListView *listView;
-    QHBoxLayout *horizontalLayout_4;
-    QLineEdit *lineEdit;
-    QPushButton *pushButton;
+    QVBoxLayout *verticalLayout;
+    QVBoxLayout *verticalLayout_3;
+    QGridLayout *gridLayout;
     QCheckBox *autoScroll;
+    QPushButton *pushButton;
+    QLineEdit *lineEdit;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
 
@@ -48,7 +48,7 @@ public:
     {
         if (serialqtClass->objectName().isEmpty())
             serialqtClass->setObjectName(QStringLiteral("serialqtClass"));
-        serialqtClass->resize(796, 664);
+        serialqtClass->resize(767, 568);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(1);
@@ -68,19 +68,39 @@ public:
         verticalLayout_2->setSpacing(6);
         verticalLayout_2->setContentsMargins(11, 11, 11, 11);
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        listView = new QListView(centralWidget);
-        listView->setObjectName(QStringLiteral("listView"));
-        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Expanding);
+        verticalLayout = new QVBoxLayout();
+        verticalLayout->setSpacing(6);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setSpacing(6);
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        verticalLayout_3->setSizeConstraint(QLayout::SetMaximumSize);
+        verticalLayout_3->setContentsMargins(-1, 0, -1, -1);
+
+        verticalLayout->addLayout(verticalLayout_3);
+
+        gridLayout = new QGridLayout();
+        gridLayout->setSpacing(6);
+        gridLayout->setObjectName(QStringLiteral("gridLayout"));
+        gridLayout->setSizeConstraint(QLayout::SetDefaultConstraint);
+        gridLayout->setHorizontalSpacing(5);
+        gridLayout->setVerticalSpacing(8);
+        autoScroll = new QCheckBox(centralWidget);
+        autoScroll->setObjectName(QStringLiteral("autoScroll"));
+
+        gridLayout->addWidget(autoScroll, 1, 1, 1, 1);
+
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        QSizePolicy sizePolicy1(QSizePolicy::Preferred, QSizePolicy::Fixed);
         sizePolicy1.setHorizontalStretch(0);
         sizePolicy1.setVerticalStretch(0);
-        sizePolicy1.setHeightForWidth(listView->sizePolicy().hasHeightForWidth());
-        listView->setSizePolicy(sizePolicy1);
+        sizePolicy1.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
+        pushButton->setSizePolicy(sizePolicy1);
+        pushButton->setMaximumSize(QSize(50, 16777215));
 
-        verticalLayout_2->addWidget(listView);
+        gridLayout->addWidget(pushButton, 0, 1, 1, 1);
 
-        horizontalLayout_4 = new QHBoxLayout();
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
         lineEdit = new QLineEdit(centralWidget);
         lineEdit->setObjectName(QStringLiteral("lineEdit"));
         QSizePolicy sizePolicy2(QSizePolicy::Expanding, QSizePolicy::Fixed);
@@ -90,26 +110,13 @@ public:
         lineEdit->setSizePolicy(sizePolicy2);
         lineEdit->setMaximumSize(QSize(16777210, 16777215));
 
-        horizontalLayout_4->addWidget(lineEdit);
-
-        pushButton = new QPushButton(centralWidget);
-        pushButton->setObjectName(QStringLiteral("pushButton"));
-        QSizePolicy sizePolicy3(QSizePolicy::Preferred, QSizePolicy::Fixed);
-        sizePolicy3.setHorizontalStretch(0);
-        sizePolicy3.setVerticalStretch(0);
-        sizePolicy3.setHeightForWidth(pushButton->sizePolicy().hasHeightForWidth());
-        pushButton->setSizePolicy(sizePolicy3);
-        pushButton->setMaximumSize(QSize(50, 16777215));
-
-        horizontalLayout_4->addWidget(pushButton);
-
-        autoScroll = new QCheckBox(centralWidget);
-        autoScroll->setObjectName(QStringLiteral("autoScroll"));
-
-        horizontalLayout_4->addWidget(autoScroll);
+        gridLayout->addWidget(lineEdit, 0, 0, 1, 1);
 
 
-        verticalLayout_2->addLayout(horizontalLayout_4);
+        verticalLayout->addLayout(gridLayout);
+
+
+        verticalLayout_2->addLayout(verticalLayout);
 
         serialqtClass->setCentralWidget(centralWidget);
         mainToolBar = new QToolBar(serialqtClass);
@@ -131,8 +138,8 @@ public:
         quit->setText(QApplication::translate("serialqtClass", "Quit", nullptr));
         connect->setText(QApplication::translate("serialqtClass", "connect", nullptr));
         disconnect->setText(QApplication::translate("serialqtClass", "disconnect", nullptr));
-        pushButton->setText(QApplication::translate("serialqtClass", "Send", nullptr));
         autoScroll->setText(QApplication::translate("serialqtClass", "Autoscroll", nullptr));
+        pushButton->setText(QApplication::translate("serialqtClass", "Send", nullptr));
     } // retranslateUi
 
 };

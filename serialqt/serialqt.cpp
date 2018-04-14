@@ -3,17 +3,17 @@
 #include <qmessagebox.h>
 #include <QDebug>
 #include <QMenuBar>
+#include <console.h>
+#include <QScrollBar>
 serialqt::serialqt(QWidget *parent)
-	: QMainWindow(parent), m_serial(new QSerialPort(this))
+	: QMainWindow(parent), m_serial(new QSerialPort(this)), m_console(new Console)
 {
 	timer = new QTimer(this);
 	connect(timer, SIGNAL(timeout()), this, SLOT(update()));
 	timer->start(100);
-
 	drawMenu();
 	ui.setupUi(this);
-	model = new QStringListModel(this);
-
+	ui.verticalLayout_3->addWidget(m_console);
 	connect(m_serial, &QSerialPort::readyRead, this, &serialqt::readData);
 }
 
@@ -77,6 +77,7 @@ void serialqt::drawMenu()
 void serialqt::exitProgram()
 {
 	closeSerialPort();
+	m_console->close();
 	qApp->exit();
 }
 void serialqt::closeSerialPort()
@@ -112,22 +113,19 @@ void serialqt::readData()
 {
 	const QByteArray data = m_serial->readAll();
 
-	
-	// Make data
-	QStringList List;
-	
-	List << model->stringList() << data;
-
-	// Populate our model
-	model->setStringList(List);
-
-	// Glue model and view together
-	ui.listView->setModel(model);
+	m_console->putData(data);
 
 	if (ui.autoScroll->isChecked())
 	{
-		ui.listView->scrollToBottom();
+		
+		QScrollBar *bar = m_console->verticalScrollBar();
+		m_console->verticalScrollBar()->setValue(bar->maximum());
 	}
+	else 
+	{
+		m_console->document()->setMaximumBlockCount(-1); // to prevent scrolling.
+	}
+	
 
 }
 void serialqt::writeData()
