@@ -3,6 +3,7 @@
 #include "ui_serialqt.h"
 #include <QSerialPort>
 #include <QStringListModel>
+#include <QLabel>
 #include <console.h>
 class serialqt : public QMainWindow
 {
@@ -15,9 +16,12 @@ private slots:
 	void closeSerialPort();
 	void readData();
 	void update();
+	void drawMenu();
+	void clearTerminal();
 	
 public:
 	serialqt(QWidget *parent = Q_NULLPTR);
+	void drawStatusBar();
 
 private:
 	Ui::serialqtClass ui;
@@ -28,13 +32,17 @@ private:
 	QMenu* fileMenu;
 	QMenu* settingsMenu;
 	QAction *actionQuit;
+	QAction *actionClear;
 	QMenu* subMenuConnect;
 	QMenu* subMenuBaudrate;
 	QAction* actionPort;
 	QAction* actionDisconnect;
 	QAction* actionBaudrate;
+	QAction* actionScan;
+	QLabel *statusBar_baudrate;
+	QLabel *statusBar_connection;
 
-	void drawMenu();
+
 	QTimer* timer;
 
 };

@@ -13,6 +13,11 @@ Console::Console(QWidget *parent)
 
 void Console::putData(const QByteArray &data)
 {
-	insertPlainText(data);
+	QPlainTextEdit::insertPlainText(data);
 	QScrollBar *bar = verticalScrollBar();
+}
+
+void Console::clearData()
+{
+	QPlainTextEdit::clear();
 }
